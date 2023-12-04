@@ -272,7 +272,7 @@
     function delet(s) {
         if (confirm('are you sure') == true) {
             setTimeout(() => {
-                s.parentElement.style.display = 'none'
+                s.parentElement.remove()
             }, 400)
             s.parentElement.classList.add('transform')
         }
