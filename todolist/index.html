@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="icon/font/bootstrap-icons.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        #box {
+            width: 700px;
+            background-color: #ff6666;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 150px auto;
+            box-shadow: -10px -10px 0 0 rgb(216, 216, 216);
+
+            >h1 {
+                text-transform: capitalize;
+                width: 80%;
+                height: 80px;
+                font-size: 35px;
+                display: flex;
+                justify-content: start;
+                align-items: center;
+                color: white;
+                font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+            }
+
+            >input {
+                height: 50px;
+                width: 60%;
+                border: none;
+                margin-bottom: 15px;
+            }
+
+            >button {
+                color: white;
+                height: 50px;
+                width: 18%;
+                margin-left: 2%;
+                border: 1px solid white;
+                text-transform: uppercase;
+                background-color: #ff6666;
+                margin-bottom: 15px;
+                cursor: pointer;
+            }
+        }
+
+        .div {
+            width: 80%;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 10px;
+            transition: 0.4s;
+
+            >h3 {
+                width: 80%;
+                word-break: break-all;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: start;
+                align-items: center;
+                color: white;
+                border-bottom: 1px solid white;
+                font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+            }
+
+            >button {
+                color: white;
+                background-color: #ff6666;
+                width: 10%;
+                height: 40px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border: none;
+                cursor: pointer;
+                overflow: hidden;
+            }
+        }
+
+        .transform {
+            transform: translateX(-500px);
+            opacity: 0;
+        }
+
+        .but {
+            position: relative;
+        }
+
+        .but>span:nth-of-type(1) {
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            top: 0;
+            left: -100%;
+            background-image: linear-gradient(90deg, transparent, white);
+            animation: span1 1s linear infinite;
+        }
+
+        .but>span:nth-of-type(2) {
+            position: absolute;
+            width: 1px;
+            height: 100%;
+            top: -100%;
+            right: 0px;
+            background-image: linear-gradient(180deg, transparent, white);
+            animation: span2 1s linear infinite;
+        }
+
+        .but>span:nth-of-type(3) {
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            bottom: 0px;
+            right: -100%;
+            background-image: linear-gradient(270deg, transparent, white);
+            animation: span3 1s linear infinite;
+        }
+
+        .but>span:nth-of-type(4) {
+            position: absolute;
+            width: 1px;
+            height: 100%;
+            bottom: -100%;
+            left: 0;
+            background-image: linear-gradient(0deg, transparent, white);
+            animation: span4 1s linear infinite;
+        }
+
+        @keyframes span1 {
+            0% {
+                left: -100%;
+            }
+
+            25% {
+                left: 0px;
+            }
+
+            50% {
+                left: 100%;
+            }
+
+            75% {
+                left: 100%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        @keyframes span2 {
+            0% {
+                top: -100%;
+            }
+
+            25% {
+                top: -100%;
+            }
+
+            50% {
+                top: 0px;
+            }
+
+            75% {
+                top: 100%;
+            }
+
+            100% {
+                top: 100%;
+            }
+        }
+
+        @keyframes span3 {
+            0% {
+                right: -100%;
+            }
+
+            25% {
+                right: -100%;
+            }
+
+            50% {
+                right: -100%;
+            }
+
+            75% {
+                right: 0px;
+            }
+
+            100% {
+                right: 100%;
+            }
+        }
+
+        @keyframes span4 {
+            0% {
+                bottom: -100%;
+            }
+
+            25% {
+                bottom: -100%;
+            }
+
+            50% {
+                bottom: -100%;
+            }
+
+            75% {
+                bottom: -100%;
+            }
+
+            100% {
+                bottom: 0%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <h1>to do list</h1>
+        <input type="text">
+        <button id="but">add item</button>
+    </div>
+</body>
+<script>
+    document.getElementById('but').addEventListener('click', (e) => {
+        let text = e.target.previousElementSibling.value
+        let list = document.querySelectorAll('.div')
+        if (text != '') {
+            let counter = 0
+            list.forEach((val) => {
+                if ((val.getAttribute('data-text')) == text) {
+                    counter++
+                }
+            })
+            if (counter == 0) {
+                let div = document.createElement('div')
+                div.classList.add('div')
+                div.setAttribute('data-text', text)
+                div.innerHTML = `
+
+                <h3 onkeyup="chechfill(this)">${text}</h3>
+                <button onclick="edit(this)"><i class="bi bi-pencil-fill"></i></button>
+                <button onclick="delet(this)"><i class="bi bi-trash3-fill"></i></button>
+            `
+                document.getElementById('box').appendChild(div)
+                e.target.previousElementSibling.focus()
+                e.target.previousElementSibling.value = null
+            }
+            else {
+                alert('item is already exist')
+                e.target.previousElementSibling.focus()
+                e.target.previousElementSibling.value = null
+            }
+        } else {
+            alert('please fill the form')
+        }
+    })
+    function delet(s) {
+        if (confirm('are you sure') == true) {
+            setTimeout(() => {
+                s.parentElement.style.display = 'none'
+            }, 400)
+            s.parentElement.classList.add('transform')
+        }
+    }
+    let flag = 1
+    function edit(s) {
+        if (flag % 2) {
+            s.previousElementSibling.setAttribute('contenteditable', true)
+            s.innerHTML = `           
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Done
+            `
+            s.classList.add('but')
+        } else {
+            s.previousElementSibling.setAttribute('contenteditable', 'false')
+            s.innerHTML = '<i class="bi bi-pencil-fill"></i>'
+        }
+        flag++
+    }
+    function chechfill(s) {
+        if ((s.innerHTML) == '') {
+            s.parentElement.remove()
+        }
+    }
+</script>
+
+</html>
